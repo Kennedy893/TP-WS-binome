@@ -1,0 +1,7 @@
+package com.example.rest.exception;
+
+public class DatabaseConnectionException extends RuntimeException {
+    public DatabaseConnectionException(String message) {
+        super(message);
+    }
+}

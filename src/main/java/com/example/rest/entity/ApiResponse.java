@@ -22,6 +22,11 @@ public class ApiResponse<T> {
         return new ApiResponse<>("error", message, null);
     }
 
+
+    public static <T> ApiResponse<T> error(String code, String message) {
+        return new ApiResponse<>(code, message, null);
+    }
+
     public String getStatus() { return status; }
     public String getMessage() { return message; }
     public T getData() { return data; }

@@ -3,21 +3,27 @@ package com.example.rest.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.example.rest.dto.NoteAnneeDTO;
 import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.entity.Inscription;
-import com.example.rest.entity.Notes;
+import com.example.rest.exception.DatabaseConnectionException;
+import com.example.rest.exception.EtudiantNotFoundException;
+import com.example.rest.repository.EtudiantRepository;
 import com.example.rest.repository.InscriptionRepository;
 
 @Service
 public class InscriptionService {
 
+    private final EtudiantRepository etudiantRepository;
+
     private final InscriptionRepository repository;
 
-    public InscriptionService(InscriptionRepository repository) {
+    public InscriptionService(InscriptionRepository repository, EtudiantRepository etudiantRepository) {
         this.repository = repository;
+        this.etudiantRepository = etudiantRepository;
     }
 
     public List<Inscription> findAll() {
@@ -37,7 +43,16 @@ public class InscriptionService {
     }
 
     public List<NoteSemestreDTO> getNotesBySemestreAndEtudiant(Long etudiantId, Long semestreId) {
-        return repository.findNotesByEtudiantAndSemestre(etudiantId, semestreId);
+        if (!etudiantRepository.existsById(etudiantId)) {
+            throw new EtudiantNotFoundException("L'étudiant avec l'ID " + etudiantId + " n'existe pas.");
+        }
+        try {
+            return repository.findNotesByEtudiantAndSemestre(etudiantId, semestreId);
+        } catch (DataAccessException e) {
+            throw new DatabaseConnectionException("Problème de connexion à la base de données.");
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur imprévue : " + e.getMessage());
+        }
     }
 
     public List<NoteAnneeDTO> getNotesByEtudiantAndAnnee(Long etudiantId, int annee) {
