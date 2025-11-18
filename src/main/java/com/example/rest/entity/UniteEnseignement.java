@@ -3,6 +3,7 @@ package com.example.rest.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "uniteenseignement")
 public class UniteEnseignement {
 
     @Id

@@ -11,6 +11,9 @@
 	<groupId>com.example</groupId>
 	<artifactId>rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+
 	<name>rest</name>
 	<description>Rest project for Spring Boot</description>
 	<url/>
@@ -30,6 +33,13 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+
+
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-tomcat</artifactId>
+	</dependency>
+
     <!-- Pour les contrôleurs REST -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
