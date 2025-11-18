@@ -1,0 +1,7 @@
+package com.example.rest.repository;
+
+import com.example.rest.entity.Semestre;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SemestreRepository extends JpaRepository<Semestre, Long> {
+}
