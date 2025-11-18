@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.rest.entity.Inscription;
+import com.example.rest.entity.Notes;
 import com.example.rest.repository.InscriptionRepository;
 
 @Service
@@ -31,5 +32,9 @@ public class InscriptionService {
 
     public void deleteById(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<Notes> getNotesBySemestreAndEtudiant(Long etudiantId, Long semestreId) {
+        return repository.findNotesByEtudiantAndSemestre(etudiantId, semestreId);
     }
 }
