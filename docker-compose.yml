@@ -1,0 +1,39 @@
+services:
+  app:
+    build:
+      context: .          # chemin vers le dossier contenant ton Dockerfile (généralement le dossier racine du projet)
+      dockerfile: Dockerfile  # nom du Dockerfile, si tu l'as nommé autrement, précise ici
+    container_name: spring_app
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/rallye
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - app-network
+
+  db:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rallye
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/rallye.sql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  db_data:
