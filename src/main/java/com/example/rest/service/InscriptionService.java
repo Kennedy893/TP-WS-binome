@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.rest.dto.NoteAnneeDTO;
 import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.entity.Inscription;
 import com.example.rest.entity.Notes;
@@ -37,5 +38,14 @@ public class InscriptionService {
 
     public List<NoteSemestreDTO> getNotesBySemestreAndEtudiant(Long etudiantId, Long semestreId) {
         return repository.findNotesByEtudiantAndSemestre(etudiantId, semestreId);
+    }
+
+    public List<NoteAnneeDTO> getNotesByEtudiantAndAnnee(Long etudiantId, int annee) {
+        // Supposons : année 1 = semestres 1 et 2, année 2 = semestres 3 et 4, etc.
+        int semestre1 = (annee - 1) * 2 + 1;
+        int semestre2 = semestre1 + 1;
+        List<Long> semestreIds = List.of((long)semestre1, (long)semestre2);
+
+        return repository.findNotesParEtudiantEtSemestres(etudiantId, semestreIds);
     }
 }

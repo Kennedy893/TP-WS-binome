@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.rest.dto.NoteAnneeDTO;
 import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.entity.ApiResponse;
 import com.example.rest.entity.Notes;
@@ -42,5 +43,21 @@ public class NotesController
 
         return ApiResponse.success("Notes récupérées avec succès.", notes);
     }
+
+    @GetMapping("/etudiant/{etudiantId}/annee/{annee}")
+    public ApiResponse<List<NoteAnneeDTO>> getNotesAnnee(
+            @PathVariable Long etudiantId,
+            @PathVariable int annee) 
+    {
+
+        List<NoteAnneeDTO> notes = inscriptionService.getNotesByEtudiantAndAnnee(etudiantId, annee);
+
+        if (notes.isEmpty()) {
+            return ApiResponse.error("Aucune note trouvée pour cet étudiant et cette année.");
+        }
+
+        return ApiResponse.success("Notes récupérées avec succès.", notes);
+    }
+
 
 }

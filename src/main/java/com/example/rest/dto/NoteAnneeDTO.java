@@ -1,26 +1,25 @@
 package com.example.rest.dto;
 
-public class NoteSemestreDTO 
+public class NoteAnneeDTO 
 {
     private String nomEtudiant;
     private String prenomsEtudiant;
     private String nomSemestre;
-    private Double valeurNote;
     private String codeUE;
     private String nomUE;
+    private Double valeurNote;
 
-    
-
-    public NoteSemestreDTO(String nomEtudiant, String prenomsEtudiant, String nomSemestre, Double valeurNote, String codeUE, String nomUE) {
+    public NoteAnneeDTO(String nomEtudiant, String prenomsEtudiant, String nomSemestre,
+                        String codeUE, String nomUE, Double valeurNote) {
         this.nomEtudiant = nomEtudiant;
         this.prenomsEtudiant = prenomsEtudiant;
         this.nomSemestre = nomSemestre;
-        this.valeurNote = valeurNote;
         this.codeUE = codeUE;
         this.nomUE = nomUE;
+        this.valeurNote = valeurNote;
     }
 
-    // getters et setters
+    // Getters et setters
     public String getNomEtudiant() { return nomEtudiant; }
     public void setNomEtudiant(String nomEtudiant) { this.nomEtudiant = nomEtudiant; }
 
@@ -30,24 +29,12 @@ public class NoteSemestreDTO
     public String getNomSemestre() { return nomSemestre; }
     public void setNomSemestre(String nomSemestre) { this.nomSemestre = nomSemestre; }
 
+    public String getCodeUE() { return codeUE; }
+    public void setCodeUE(String codeUE) { this.codeUE = codeUE; }
+
+    public String getNomUE() { return nomUE; }
+    public void setNomUE(String nomUE) { this.nomUE = nomUE; }
+
     public Double getValeurNote() { return valeurNote; }
     public void setValeurNote(Double valeurNote) { this.valeurNote = valeurNote; }
-
-    public String getCodeUE() {
-        return codeUE;
-    }
-
-    public void setCodeUE(String codeUE) {
-        this.codeUE = codeUE;
-    }
-
-    public String getNomUE() {
-        return nomUE;
-    }
-
-    public void setNomUE(String nomUE) {
-        this.nomUE = nomUE;
-    }
-
-
 }
