@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.entity.Inscription;
 import com.example.rest.entity.Notes;
 import com.example.rest.repository.InscriptionRepository;
@@ -34,7 +35,7 @@ public class InscriptionService {
         repository.deleteById(id);
     }
 
-    public List<Notes> getNotesBySemestreAndEtudiant(Long etudiantId, Long semestreId) {
+    public List<NoteSemestreDTO> getNotesBySemestreAndEtudiant(Long etudiantId, Long semestreId) {
         return repository.findNotesByEtudiantAndSemestre(etudiantId, semestreId);
     }
 }
