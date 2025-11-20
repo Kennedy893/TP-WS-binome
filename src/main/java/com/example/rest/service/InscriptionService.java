@@ -55,6 +55,7 @@ public class InscriptionService {
         }
     }
 
+    
     public List<NoteAnneeDTO> getNotesByEtudiantAndAnnee(Long etudiantId, int annee) {
         // Supposons : année 1 = semestres 1 et 2, année 2 = semestres 3 et 4, etc.
         int semestre1 = (annee - 1) * 2 + 1;

@@ -10,7 +10,7 @@ import java.security.Key;
 @Component
 public class JwtUtil {
     private final String SECRET = "maCleSuperSecretePourJWTDe32CaracteresMinimum";
-    private final long EXPIRATION_TIME = 86400000; // 24h
+    private final long EXPIRATION_TIME = 86400000L * 365; // 24h * 365 jours
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
