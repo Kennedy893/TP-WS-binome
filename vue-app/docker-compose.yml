@@ -1,0 +1,15 @@
+services:
+  vue-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vue-app:dev
+    ports:
+      - "5174:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules  # éviter les conflits entre host et container
+    environment:
+      - NODE_ENV=development
+    command: ["npm", "run", "dev", "--", "--host=0.0.0.0"]
+
