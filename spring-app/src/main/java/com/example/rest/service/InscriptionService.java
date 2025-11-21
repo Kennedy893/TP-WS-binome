@@ -68,6 +68,8 @@ public class InscriptionService {
 
     public List<EtudiantMoyenneDTO> getEtudiantMoyenne (Long idSemestre) {
         return repository.findEtudiantsEtMoyenneBySemestre(idSemestre);
+    }
+
     public List<NoteSemestreDTO> getNotesBySemestreEtudiantAndOption(Long etudiantId, Long semestreId, Long optionId) {
         if (!etudiantRepository.existsById(etudiantId)) {
             throw new EtudiantNotFoundException("L'étudiant avec l'ID " + etudiantId + " n'existe pas.");
@@ -93,5 +95,4 @@ public class InscriptionService {
             throw new RuntimeException("Erreur imprévue : " + e.getMessage());
         }
     }
-}
 }
