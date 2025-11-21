@@ -57,7 +57,6 @@ export default {
 
 <template>
   <div id="app">
-    <h1>Gestion des Semestres</h1>
 
     <component 
       :is="currentView" 
@@ -74,11 +73,3 @@ export default {
 </template>
 
 
-<style>
-#app {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  font-family: "Poppins", sans-serif;
-}
-</style>

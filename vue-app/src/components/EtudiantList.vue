@@ -12,23 +12,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="etu in etudiants" :key="etu.id">
+        <tr v-for="etu in etudiants" :key="etu.id" class="table-row">
           <td>
             <a href="#" @click.prevent="$emit('voir-details', etu)" class="nom-link">
               {{ etu.nom }}
             </a>
           </td>
           <td>{{ etu.prenoms }}</td>
-          <td>
-            <button @click="$emit('releve', etu)">
-              {{ etu.moyenne.toFixed(2) }}
-            </button>
-          </td>
+          <td><button @click="$emit('releve', etu)" class="moyenne-btn">{{ etu.moyenne.toFixed(2) }}</button></td>
         </tr>
       </tbody>
     </table>
 
-    <p v-else>Chargement des étudiants...</p>
+    <p v-else class="loading-text">Chargement des étudiants...</p>
 
     <!-- Section des moyennes détaillées -->
     <div v-if="etudiantsMoyennes.length" class="moyennes-details">
@@ -104,43 +100,102 @@ export default {
 </script>
 
 <style scoped>
+.etudiant-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
 .table-etudiants {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
 }
+
 .table-etudiants th,
 .table-etudiants td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px 16px;
   text-align: left;
 }
+
 .table-etudiants th {
-  background-color: #f4f4f4;
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  border-bottom: 1px solid #dee2e6;
 }
+
+.table-row:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.table-row:hover {
+  background-color: #e9ecef;
+}
+
 .nom-link {
-  color: #1976d2;
-  cursor: pointer;
-  text-decoration: underline;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
 }
+
 .nom-link:hover {
-  color: #1565c0;
+  text-decoration: underline;
+  color: #0056b3;
 }
+
+.moyenne-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.moyenne-btn:hover {
+  background-color: #5a6268;
+}
+
+.loading-text {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
 .retour-btn {
   margin-top: 20px;
-  padding: 8px 14px;
+  padding: 10px 20px;
   border: none;
-  background: #1976d2;
+  background-color: #007bff;
   color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .retour-btn:hover {
-  background: #1565c0;
-}
-.moyennes-details {
-  margin-top: 20px;
-  padding-top: 10px;
-  border-top: 1px solid #ccc;
+  background-color: #0056b3;
 }
 </style>

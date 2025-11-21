@@ -49,7 +49,7 @@ export default {
 
       for (const semestreId of semestres) {
         const response = await fetch(
-          `http://localhost:8080/etudiants/${this.etudiant.id}/semestres/${semestreId}/moyenne`
+          `${import.meta.env.VITE_BACK_BASE_URL}/etudiants/${this.etudiant.id}/semestres/${semestreId}/moyenne`
         )
         const json = await response.json()
 

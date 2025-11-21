@@ -67,7 +67,14 @@ public class InscriptionService {
 
 
     public List<EtudiantMoyenneDTO> getEtudiantMoyenne (Long idSemestre) {
-        return repository.findEtudiantsEtMoyenneBySemestre(idSemestre);
+        List <EtudiantMoyenneDTO> ems = repository.findEtudiantsEtMoyenneBySemestre(idSemestre);
+        
+        for (EtudiantMoyenneDTO em : ems) {
+            List <MoyenneSemestreDTO> moyenneSem = getMoyenneParSemestre(em.getId(), idSemestre);
+            double moyenne = moyenneSem.get(0).getMoyenne();
+            em.setMoyenne(moyenne);
+        }
+        return ems;
     }
 
     public List<NoteSemestreDTO> getNotesBySemestreEtudiantAndOption(Long etudiantId, Long semestreId, Long optionId) {

@@ -2,17 +2,24 @@
   <div class="details-etudiant">
     <h3>Détails de l'étudiant</h3>
 
-    <div v-if="loading">Chargement des informations...</div>
+    <div v-if="loading" class="loading-text">Chargement des informations...</div>
 
-    <div v-else-if="etudiant">
-      <p><strong>Nom :</strong> {{ etudiant.nom }}</p>
-      <p><strong>Prénoms :</strong> {{ etudiant.prenoms }}</p>
-      <p><strong>Date de naissance :</strong> {{ formatDate(etudiant.dateNaissance) }}</p>
-      <p><strong>Lieu de naissance :</strong> {{ etudiant.lieuNaissance }}</p>
-      <p><strong>Numéro d'inscription :</strong> {{ etudiant.numInscription }}</p>
+    <div v-else-if="etudiant" class="details-card">
+      <dl class="details-list">
+        <dt>Nom :</dt>
+        <dd>{{ etudiant.nom }}</dd>
+        <dt>Prénoms :</dt>
+        <dd>{{ etudiant.prenoms }}</dd>
+        <dt>Date de naissance :</dt>
+        <dd>{{ formatDate(etudiant.dateNaissance) }}</dd>
+        <dt>Lieu de naissance :</dt>
+        <dd>{{ etudiant.lieuNaissance }}</dd>
+        <dt>Numéro d'inscription :</dt>
+        <dd>{{ etudiant.numInscription }}</dd>
+      </dl>
 
       <h4>Moyennes par semestre :</h4>
-      <ul>
+      <ul class="moyennes-list">
         <li v-for="(moy, index) in moyennesSemestres" :key="index">
           {{ moy.nomSemestre }} : {{ moy.moyenne.toFixed(2) }}
         </li>
@@ -21,7 +28,7 @@
       <button @click="$emit('retour')" class="retour-btn">⬅ Retour</button>
     </div>
 
-    <div v-else>
+    <div v-else class="error-card">
       <p>Impossible de récupérer les détails de l'étudiant.</p>
       <button @click="$emit('retour')" class="retour-btn">⬅ Retour</button>
     </div>
@@ -80,21 +87,92 @@ export default {
 
 <style scoped>
 .details-etudiant {
-  padding: 10px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-top: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+h3 {
+  font-size: 1.25rem;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.details-card,
+.error-card {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.details-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+dt {
+  font-weight: 600;
+  color: #495057;
+}
+
+dd {
+  color: #212529;
+}
+
+h4 {
+  font-size: 1.1rem;
+  color: #333333;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.moyennes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.moyennes-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+  color: #495057;
+}
+
+.moyennes-list li:last-child {
+  border-bottom: none;
+}
+
+.loading-text,
+.error-card p {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
 .retour-btn {
   margin-top: 20px;
-  padding: 8px 14px;
+  padding: 10px 20px;
   border: none;
-  background: #1976d2;
+  background-color: #007bff;
   color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .retour-btn:hover {
-  background: #1565c0;
+  background-color: #0056b3;
 }
 </style>
