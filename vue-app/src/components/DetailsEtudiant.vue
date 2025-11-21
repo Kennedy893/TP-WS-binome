@@ -50,7 +50,7 @@ export default {
       }
 
       try {
-        const response = await fetch(`http://localhost:8080/etudiants/${this.etudiantSelectionne.id}`)
+        const response = await fetch(`${import.meta.env.VITE_BACK_BASE_URL}/etudiants/${this.etudiantSelectionne.id}`)
         const json = await response.json()
 
         if (json.status === 'success') {

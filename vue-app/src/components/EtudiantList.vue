@@ -44,7 +44,7 @@ export default {
   methods: {
     async fetchEtudiants() {
       try {
-        const response = await fetch(`http://localhost:8080/semestres/${this.semestreSelectionne.id}/etudiants/`)
+        const response = await fetch(`${import.meta.env.VITE_BACK_BASE_URL}/semestres/${this.semestreSelectionne.id}/etudiants/`)
         const json = await response.json()
 
         if (json.status === 'success') {

@@ -30,8 +30,10 @@ export default {
   },
   methods: {
     async getSemestres() {
+
+      
       try {
-        const response = await fetch('http://localhost:8080/semestres/')
+        const response = await fetch(`${import.meta.env.VITE_BACK_BASE_URL}/semestres/`)
         const json = await response.json()
         if (json.status === 'success') {
           this.semestres = json.data
