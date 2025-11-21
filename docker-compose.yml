@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  # ---------------------
+  # BACKEND - SPRING BOOT
+  # ---------------------
+  app:
+    build:
+      context: ./spring-app
+      dockerfile: Dockerfile
+    container_name: spring_ws
+    depends_on:
+      - db
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/tp_ws
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    networks:
+      - app-network
+
+  # ---------------------
+  # DATABASE - POSTGRES
+  # ---------------------
+  db:
+    image: postgres:16
+    container_name: postgres_ws
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tp_ws
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./spring-app/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  # ---------------------
+  # FRONTEND - VUEJS
+  # ---------------------
+  vue-app:
+    build:
+      context: ./vue-app
+      dockerfile: Dockerfile
+    image: vue-app:dev
+    container_name: vue_dev
+    ports:
+      - "5174:5173"
+    volumes:
+      - ./vue-app:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: ["npm", "run", "dev", "--", "--host=0.0.0.0"]
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+networks:
+  app-network:
+
+volumes:
+  db_data:
