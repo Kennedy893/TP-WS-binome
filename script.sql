@@ -82,3 +82,9 @@ CREATE TABLE Matiere_Optionnel(
     FOREIGN KEY(id_semestre) REFERENCES Semestre(id),
     FOREIGN KEY(id_ue) REFERENCES UniteEnseignement(id)
 );
+
+ALTER TABLE Matiere_Optionnel
+ADD COLUMN id_option INTEGER,
+ADD CONSTRAINT fk_option
+    FOREIGN KEY(id_option) REFERENCES Option(id);
+

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.rest.dto.NoteAnneeDTO;
 import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.entity.ApiResponse;
-import com.example.rest.entity.Notes;
 import com.example.rest.service.InscriptionService;
 
 @RestController
@@ -30,7 +29,7 @@ public class NotesController
     //     return inscriptionService.getNotesBySemestreAndEtudiant(etudiantId, semestreId);
     // }
 
-    @GetMapping("/etudiant/{etudiantId}/semestre/{semestreId}")
+    @GetMapping("/etudiants/{etudiantId}/semestre/{semestreId}")
     public ApiResponse<List<NoteSemestreDTO>> getNotesSemestre(
             @PathVariable Long etudiantId,
             @PathVariable Long semestreId
@@ -44,7 +43,7 @@ public class NotesController
         return ApiResponse.success("Notes récupérées avec succès.", notes);
     }
 
-    @GetMapping("/etudiant/{etudiantId}/annee/{annee}")
+    @GetMapping("/etudiants/{etudiantId}/annee/{annee}")
     public ApiResponse<List<NoteAnneeDTO>> getNotesAnnee(
             @PathVariable Long etudiantId,
             @PathVariable int annee) 
@@ -54,6 +53,21 @@ public class NotesController
 
         if (notes.isEmpty()) {
             return ApiResponse.error("Aucune note trouvée pour cet étudiant et cette année.");
+        }
+
+        return ApiResponse.success("Notes récupérées avec succès.", notes);
+    }
+
+    @GetMapping("/etudiants/{etudiantId}/semestre/{semestreId}/options/{optionId}")
+    public ApiResponse<List<NoteSemestreDTO>> getNotesSemestreWithOption(
+            @PathVariable Long etudiantId,
+            @PathVariable Long semestreId,
+            @PathVariable Long optionId
+    ) {
+        List<NoteSemestreDTO> notes = inscriptionService.getNotesBySemestreEtudiantAndOption(etudiantId, semestreId, optionId);
+
+        if (notes.isEmpty()) {
+            return ApiResponse.error("Aucune note trouvée pour cet étudiant, ce semestre et cette option.");
         }
 
         return ApiResponse.success("Notes récupérées avec succès.", notes);

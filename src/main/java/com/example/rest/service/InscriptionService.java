@@ -64,4 +64,17 @@ public class InscriptionService {
 
         return repository.findNotesParEtudiantEtSemestres(etudiantId, semestreIds);
     }
+
+    public List<NoteSemestreDTO> getNotesBySemestreEtudiantAndOption(Long etudiantId, Long semestreId, Long optionId) {
+        if (!etudiantRepository.existsById(etudiantId)) {
+            throw new EtudiantNotFoundException("L'étudiant avec l'ID " + etudiantId + " n'existe pas.");
+        }
+        try {
+            return repository.findNotesByEtudiantSemestreOption(etudiantId, semestreId, optionId);
+        } catch (DataAccessException e) {
+            throw new DatabaseConnectionException("Problème de connexion à la base de données.");
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur imprévue : " + e.getMessage());
+        }
+    }
 }

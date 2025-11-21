@@ -18,6 +18,10 @@ public class MatiereOptionnel {
     @JoinColumn(name = "id_ue")
     private UniteEnseignement ue;
 
+    @ManyToOne
+    @JoinColumn(name = "id_option")
+    private Option option;
+
     public Long getId() {
         return id;
     }
@@ -40,5 +44,13 @@ public class MatiereOptionnel {
 
     public void setUe(UniteEnseignement ue) {
         this.ue = ue;
+    }
+
+    public Option getOption() {
+        return option;
+    }
+
+    public void setOption(Option option) {
+        this.option = option;
     }
 }
