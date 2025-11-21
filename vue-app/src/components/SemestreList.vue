@@ -2,7 +2,7 @@
   <div class="semestre-list">
     <h2>Liste des Semestres</h2>
 
-    <ul v-if="semestres.length">
+    <ul v-if="semestres.length" class="semestre-grid">
       <li 
         v-for="sem in semestres" 
         :key="sem.id"
@@ -13,7 +13,7 @@
       </li>
     </ul>
 
-    <p v-else>Chargement des semestres...</p>
+    <p v-else class="loading-text">Chargement des semestres...</p>
   </div>
 </template>
 
@@ -49,15 +49,53 @@ export default {
 </script>
 
 <style scoped>
+.semestre-list {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.semestre-grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
 .semestre-item {
   cursor: pointer;
-  padding: 10px;
-  margin: 6px 0;
-  background: #f1f1f1;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
-  transition: background 0.3s;
+  text-align: center;
+  font-weight: 500;
+  color: #495057;
+  transition: all 0.3s ease;
 }
+
 .semestre-item:hover {
-  background: #dfe6e9;
+  background-color: #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.loading-text {
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
 }
 </style>
