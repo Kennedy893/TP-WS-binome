@@ -27,7 +27,7 @@ public class SemestreController {
         return ApiResponse.success("Semestres récupérées avec succès.", semestres);
     }
 
-    @GetMapping("/semestres/{semestreId}/etudiants")
+    @GetMapping("/semestres/{semestreId}/etudiants/")
     public ApiResponse<List<EtudiantMoyenneDTO>> getSemestres(@PathVariable Long semestreId) {
         List<EtudiantMoyenneDTO> semestres = inscriptionService.getEtudiantMoyenne(semestreId);
         return ApiResponse.success("Semestres et etudiants avec succès.", semestres);

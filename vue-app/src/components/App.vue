@@ -1,17 +1,3 @@
-<template>
-  <div id="app">
-    <h1>Gestion des Semestres</h1>
-
-    <!-- Vue dynamique -->
-    <component 
-      :is="currentView" 
-      :semestreSelectionne="semestreSelectionne"
-      @voir-etudiants="ouvrirEtudiants"
-      @retour="retourAccueil"
-    />
-  </div>
-</template>
-
 <script>
 import SemestreList from './SemestreList.vue'
 import EtudiantList from './EtudiantList.vue'
@@ -37,6 +23,22 @@ export default {
   }
 }
 </script>
+
+
+<template>
+  <div id="app">
+    <h1>Gestion des Semestres</h1>
+
+    <!-- Vue dynamique -->
+    <component 
+      :is="currentView" 
+      :semestreSelectionne="semestreSelectionne"
+      @voir-etudiants="ouvrirEtudiants"
+      @retour="retourAccueil"
+    />
+  </div>
+</template>
+
 
 <style>
 body {
