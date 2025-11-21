@@ -2,6 +2,7 @@
   <div class="etudiant-list">
     <h3>Étudiants du {{ semestreSelectionne.nomSemestre }}</h3>
 
+    <!-- Table principale -->
     <table v-if="etudiants.length" class="table-etudiants">
       <thead>
         <tr>
@@ -18,14 +19,25 @@
             </a>
           </td>
           <td>{{ etu.prenoms }}</td>
-          <!-- <td><button @click="$emit('releve')">{{ etu.moyenne.toFixed(2) }}</button></td> -->
-          <td><button @click="$emit('releve', etu)">{{ etu.moyenne.toFixed(2) }}</button></td>
-
+          <td>
+            <button @click="$emit('releve', etu)">
+              {{ etu.moyenne.toFixed(2) }}
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
 
     <p v-else>Chargement des étudiants...</p>
+
+    <!-- Section des moyennes détaillées -->
+    <div v-if="etudiantsMoyennes.length" class="moyennes-details">
+      <h4>Moyennes détaillées par option</h4>
+      <div v-for="m in etudiantsMoyennes" :key="m.etudiantId + '-' + m.semestreId">
+        <strong>{{ m.nomEtudiant }} {{ m.prenomsEtudiant }} :</strong>
+        {{ m.moyenne.toFixed(2) }}
+      </div>
+    </div>
 
     <button @click="$emit('retour')" class="retour-btn">⬅ Retour</button>
   </div>
@@ -37,11 +49,13 @@ export default {
   props: ['semestreSelectionne'],
   data() {
     return {
-      etudiants: []
+      etudiants: [],
+      etudiantsMoyennes: [] // pour stocker toutes les moyennes détaillées
     }
   },
   async mounted() {
     await this.fetchEtudiants()
+    await this.fetchMoyennes()
   },
   methods: {
     async fetchEtudiants() {
@@ -57,11 +71,36 @@ export default {
       } catch (error) {
         console.error('Erreur lors du chargement des étudiants :', error)
       }
+    },
+    async fetchMoyennes() {
+      try {
+        const moyennesResults = []
+
+        for (const etu of this.etudiants) {
+          const response = await fetch(`${import.meta.env.VITE_BACK_BASE_URL}/etudiants/${etu.id}/semestres/${this.semestreSelectionne.id}/moyenne`)
+          const json = await response.json()
+
+          if (json.status === 'success') {
+            json.data.forEach(m => {
+              moyennesResults.push({
+                etudiantId: etu.id,
+                nomEtudiant: etu.nom,
+                prenomsEtudiant: etu.prenoms,
+                semestreId: this.semestreSelectionne.id,
+                nomSemestre: m.nomSemestre,
+                moyenne: m.moyenne
+              })
+            })
+          }
+        }
+
+        this.etudiantsMoyennes = moyennesResults
+      } catch (err) {
+        console.error('Erreur lors du chargement des moyennes détaillées :', err)
+      }
     }
   }
 }
-
-
 </script>
 
 <style scoped>
@@ -98,5 +137,10 @@ export default {
 }
 .retour-btn:hover {
   background: #1565c0;
+}
+.moyennes-details {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
 }
 </style>

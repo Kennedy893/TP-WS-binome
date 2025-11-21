@@ -73,21 +73,38 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
                 @Param("optionId") Long optionId);
 
         // Moyenne par semestre
-       @Query("SELECT new com.example.rest.dto.MoyenneSemestreDTO(" +
-        " e.nom, e.prenoms, s.nomSemestre, AVG(CASE WHEN mo.id IS NOT NULL THEN maxOpt.valeur ELSE n.valeur END) ) " +
+//        @Query("SELECT new com.example.rest.dto.MoyenneSemestreDTO(" +
+//         " e.nom, e.prenoms, s.nomSemestre, AVG(CASE WHEN mo.id IS NOT NULL THEN maxOpt.valeur ELSE n.valeur END) ) " +
+//         "FROM Inscription i " +
+//         "JOIN i.note n " +
+//         "JOIN n.semestre s " +
+//         "JOIN i.etudiant e " +
+//         "LEFT JOIN MatiereOptionnel mo ON mo.ue = n.ue AND mo.semestre = s " +
+//         "LEFT JOIN Notes maxOpt ON maxOpt.ue = mo.ue AND maxOpt.id = (" +
+//         "   SELECT MAX(n2.id) FROM Notes n2 WHERE n2.ue = mo.ue AND n2.semestre = s" +
+//         ") " +
+//         "WHERE e.id = :etudiantId AND s.id = :semestreId " +
+//         "GROUP BY e.nom, e.prenoms, s.nomSemestre")
+//         List<MoyenneSemestreDTO> findMoyenneParSemestre(
+//         @Param("etudiantId") Long etudiantId,
+//         @Param("semestreId") Long semestreId);
+
+        @Query("SELECT new com.example.rest.dto.MoyenneSemestreDTO(" +
+        " e.nom, e.prenoms, s.nomSemestre, AVG(maxOpt.valeur)) " +
         "FROM Inscription i " +
         "JOIN i.note n " +
         "JOIN n.semestre s " +
         "JOIN i.etudiant e " +
-        "LEFT JOIN MatiereOptionnel mo ON mo.ue = n.ue AND mo.semestre = s " +
-        "LEFT JOIN Notes maxOpt ON maxOpt.ue = mo.ue AND maxOpt.id = (" +
+        "JOIN MatiereOptionnel mo ON mo.ue = n.ue AND mo.semestre = s " +
+        "JOIN Notes maxOpt ON maxOpt.ue = mo.ue AND maxOpt.id = (" +
         "   SELECT MAX(n2.id) FROM Notes n2 WHERE n2.ue = mo.ue AND n2.semestre = s" +
         ") " +
         "WHERE e.id = :etudiantId AND s.id = :semestreId " +
-        "GROUP BY e.nom, e.prenoms, s.nomSemestre")
+        "GROUP BY e.nom, e.prenoms, s.nomSemestre, mo.option.id")
         List<MoyenneSemestreDTO> findMoyenneParSemestre(
         @Param("etudiantId") Long etudiantId,
         @Param("semestreId") Long semestreId);
+
 
         
         @Query("SELECT new com.example.rest.dto.EtudiantMoyenneDTO(" +
