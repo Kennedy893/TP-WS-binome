@@ -12,7 +12,11 @@
       </thead>
       <tbody>
         <tr v-for="etu in etudiants" :key="etu.id">
-          <td>{{ etu.nom }}</td>
+          <td>
+            <a href="#" @click.prevent="$emit('voir-details', etu)" class="nom-link">
+              {{ etu.nom }}
+            </a>
+          </td>
           <td>{{ etu.prenoms }}</td>
           <td>{{ etu.moyenne.toFixed(2) }}</td>
         </tr>
@@ -70,6 +74,14 @@ export default {
 }
 .table-etudiants th {
   background-color: #f4f4f4;
+}
+.nom-link {
+  color: #1976d2;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.nom-link:hover {
+  color: #1565c0;
 }
 .retour-btn {
   margin-top: 20px;

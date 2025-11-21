@@ -95,4 +95,6 @@ public class InscriptionService {
             throw new RuntimeException("Erreur imprévue : " + e.getMessage());
         }
     }
+
+    
 }

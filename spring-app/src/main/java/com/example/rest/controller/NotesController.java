@@ -23,14 +23,6 @@ public class NotesController
         this.inscriptionService = inscriptionService;
     }
     
-    // @GetMapping("/etudiant/{etudiantId}/semestre/{semestreId}")
-    // public List<Notes> getNotesSemestre(
-    //     @PathVariable Long etudiantId,
-    //     @PathVariable Long semestreId
-    // ) {
-    //     return inscriptionService.getNotesBySemestreAndEtudiant(etudiantId, semestreId);
-    // }
-
     @GetMapping("/etudiants/{etudiantId}/semestre/{semestreId}")
     public ApiResponse<List<NoteSemestreDTO>> getNotesSemestre(
             @PathVariable Long etudiantId,
@@ -89,5 +81,4 @@ public class NotesController
         return ApiResponse.success("Moyenne récupérée avec succès.", moyennes);
     }
     
-
 }

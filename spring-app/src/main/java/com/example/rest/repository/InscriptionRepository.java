@@ -89,13 +89,7 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
         @Param("etudiantId") Long etudiantId,
         @Param("semestreId") Long semestreId);
 
-
-
-
-
-
-
-
+        
         @Query("SELECT new com.example.rest.dto.EtudiantMoyenneDTO(" +
         " e.id, e.nom, e.prenoms, s.nomSemestre, AVG(n.valeur)) " +
         "FROM Inscription i " +
