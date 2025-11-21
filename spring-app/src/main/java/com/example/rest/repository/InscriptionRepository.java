@@ -1,7 +1,7 @@
 package com.example.rest.repository;
 
 import java.util.List;
-
+import com.example.rest.dto.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -93,5 +93,17 @@ public interface InscriptionRepository extends JpaRepository<Inscription, Long> 
 
 
 
+
+
+
+        @Query("SELECT new com.example.rest.dto.EtudiantMoyenneDTO(" +
+        " e.id, e.nom, e.prenoms, s.nomSemestre, AVG(n.valeur)) " +
+        "FROM Inscription i " +
+        "JOIN i.etudiant e " +
+        "JOIN i.semestre s " +
+        "JOIN i.note n " +
+        "WHERE s.id = :semestreId " +
+        "GROUP BY e.id, e.nom, e.prenoms, s.nomSemestre")
+        List<EtudiantMoyenneDTO> findEtudiantsEtMoyenneBySemestre(@Param("semestreId") Long semestreId);
 
 }

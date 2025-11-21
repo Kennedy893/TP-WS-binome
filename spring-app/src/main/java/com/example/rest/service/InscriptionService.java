@@ -2,10 +2,9 @@ package com.example.rest.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
+import com.example.rest.dto.*;
 import com.example.rest.dto.NoteAnneeDTO;
 import com.example.rest.dto.NoteSemestreDTO;
 import com.example.rest.dto.MoyenneSemestreDTO;
@@ -64,6 +63,11 @@ public class InscriptionService {
         List<Long> semestreIds = List.of((long)semestre1, (long)semestre2);
 
         return repository.findNotesParEtudiantEtSemestres(etudiantId, semestreIds);
+    }
+
+
+    public List<EtudiantMoyenneDTO> getEtudiantMoyenne (Long idSemestre) {
+        return repository.findEtudiantsEtMoyenneBySemestre(idSemestre);
     }
 
     public List<NoteSemestreDTO> getNotesBySemestreEtudiantAndOption(Long etudiantId, Long semestreId, Long optionId) {
