@@ -18,7 +18,9 @@
             </a>
           </td>
           <td>{{ etu.prenoms }}</td>
-          <td>{{ etu.moyenne.toFixed(2) }}</td>
+          <!-- <td><button @click="$emit('releve')">{{ etu.moyenne.toFixed(2) }}</button></td> -->
+          <td><button @click="$emit('releve', etu)">{{ etu.moyenne.toFixed(2) }}</button></td>
+
         </tr>
       </tbody>
     </table>
@@ -58,6 +60,8 @@ export default {
     }
   }
 }
+
+
 </script>
 
 <style scoped>

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div id="app">
     <h1>Gestion des Semestres</h1>
 
@@ -11,21 +11,28 @@
       @retour="retour"
     />
   </div>
-</template>
+</template> -->
 
 <script>
 import SemestreList from './SemestreList.vue'
 import EtudiantList from './EtudiantList.vue'
 import DetailsEtudiant from './DetailsEtudiant.vue'
+import Releve from './Releve.vue'
+import InfosEtu from './InfosEtu.vue'
 
 export default {
+  // name: 'App',
+  // components: { SemestreList, EtudiantList, DetailsEtudiant },
+
+
   name: 'App',
-  components: { SemestreList, EtudiantList, DetailsEtudiant },
+  components: { SemestreList, EtudiantList, Releve, InfosEtu, DetailsEtudiant },
   data() {
     return {
       currentView: 'SemestreList',
       semestreSelectionne: null,
-      etudiantSelectionne: null
+      etudiantSelectionne: null,
+      etudiant: null
     }
   },
   methods: {
@@ -48,10 +55,41 @@ export default {
         this.currentView = 'SemestreList'
         this.semestreSelectionne = null
       }
+    },
+    retourAccueil() {
+      this.semestreSelectionne = null
+      this.currentView = 'SemestreList'
+    },
+    releve(etudiant) {
+      this.etudiant = etudiant
+      this.currentView = 'Releve'
+    },
+    infosEtu(etudiant) {
+      this.etudiant = etudiant
+      this.currentView = 'InfosEtu'
     }
   }
 }
 </script>
+
+
+<template>
+  <div id="app">
+    <h1>Gestion des Semestres</h1>
+
+    <!-- Vue dynamique -->
+    <component 
+      :is="currentView" 
+      :semestreSelectionne="semestreSelectionne"
+      :etudiant="etudiant"
+      @voir-etudiants="ouvrirEtudiants"
+      @retour="retourAccueil"
+      @releve="releve"
+      @infosEtu="infosEtu"
+    />
+  </div>
+</template>
+
 
 <style>
 #app {
