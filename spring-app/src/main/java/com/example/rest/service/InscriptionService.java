@@ -5,6 +5,9 @@ import java.util.Optional;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.example.rest.dto.*;
+import com.example.rest.dto.NoteAnneeDTO;
+import com.example.rest.dto.NoteSemestreDTO;
+import com.example.rest.dto.MoyenneSemestreDTO;
 import com.example.rest.entity.Inscription;
 import com.example.rest.exception.DatabaseConnectionException;
 import com.example.rest.exception.EtudiantNotFoundException;
@@ -65,5 +68,30 @@ public class InscriptionService {
 
     public List<EtudiantMoyenneDTO> getEtudiantMoyenne (Long idSemestre) {
         return repository.findEtudiantsEtMoyenneBySemestre(idSemestre);
+    public List<NoteSemestreDTO> getNotesBySemestreEtudiantAndOption(Long etudiantId, Long semestreId, Long optionId) {
+        if (!etudiantRepository.existsById(etudiantId)) {
+            throw new EtudiantNotFoundException("L'étudiant avec l'ID " + etudiantId + " n'existe pas.");
+        }
+        try {
+            return repository.findNotesByEtudiantSemestreOption(etudiantId, semestreId, optionId);
+        } catch (DataAccessException e) {
+            throw new DatabaseConnectionException("Problème de connexion à la base de données.");
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur imprévue : " + e.getMessage());
+        }
     }
+
+    public List<MoyenneSemestreDTO> getMoyenneParSemestre(Long etudiantId, Long semestreId) {
+        if (!etudiantRepository.existsById(etudiantId)) {
+            throw new EtudiantNotFoundException("L'étudiant avec l'ID " + etudiantId + " n'existe pas.");
+        }
+        try {
+            return repository.findMoyenneParSemestre(etudiantId, semestreId);
+        } catch (DataAccessException e) {
+            throw new DatabaseConnectionException("Problème de connexion à la base de données.");
+        } catch (Exception e) {
+            throw new RuntimeException("Erreur imprévue : " + e.getMessage());
+        }
+    }
+}
 }

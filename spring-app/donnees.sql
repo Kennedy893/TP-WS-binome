@@ -33,6 +33,57 @@ INSERT INTO UniteEnseignement(id_semestre, code_ue, nom_ue, credit) VALUES
 (3, 'INF208', 'Reseaux informatiques', 6),
 (3, 'MTH201', 'Methodes numeriques', 4),
 (3, 'ORG201', 'Bases de gestion', 4);
+-- UE de 6 crédits (optionnelles ou communes)
+INSERT INTO UniteEnseignement (id_semestre, code_ue, nom_ue, credit) VALUES
+(4, 'INF204', 'Système d information géographique', 6),
+(4, 'INF205', 'Système d information', 6),
+(4, 'INF206', 'Interface Homme/Machine', 6),
+(4, 'INF207', 'Eléments d algorithmique', 6),
+(4, 'INF209', 'Web dynamique', 6);
+
+-- Mini-projets (10 crédits)
+INSERT INTO UniteEnseignement (id_semestre, code_ue, nom_ue, credit) VALUES
+(4, 'INF210', 'Mini-projet de développement', 10),
+(4, 'INF211', 'Mini-projet de bases de données et/ou de réseaux', 10),
+(4, 'INF212', 'Mini-projet de Web et design', 10);
+
+-- UE de 4 crédits (optionnelles)
+INSERT INTO UniteEnseignement (id_semestre, code_ue, nom_ue, credit) VALUES
+(4, 'MTH202', 'Analyse des donnees', 4),
+(4, 'MTH204', 'Geometrie', 4),
+(4, 'MTH205', 'Équations differentielles', 4),
+(4, 'MTH206', 'Optimisation', 4),
+(4, 'MTH203', 'MAO', 4);
+
+INSERT INTO Matiere_Optionnel (id_semestre, id_ue) VALUES
+-- Choix 1 parmi (INF204, INF205, INF206)
+(4, 25),  -- INF204
+(4, 26),  -- INF205
+(4, 27),  -- INF206
+-- Choix 2 parmi (MTH204, MTH205, MTH206)
+(4, 34),  -- MTH204
+(4, 35),  -- MTH205
+(4, 36);  -- MTH206
+
+INSERT INTO Matiere_Optionnel (id_semestre, id_ue) VALUES
+-- Choix 1 parmi (INF204, INF206, INF207)
+(4, 25),  -- INF204
+(4, 27),  -- INF206
+(4, 28),  -- INF207
+-- Choix 2 parmi (MTH202, MTH205, MTH206)
+(4, 33),  -- MTH202
+(4, 35),  -- MTH205
+(4, 36);  -- MTH206
+
+INSERT INTO Matiere_Optionnel (id_semestre, id_ue) VALUES
+-- Choix 1 parmi (INF204, INF205, INF206)
+(4, 25),  -- INF204
+(4, 26),  -- INF205
+(4, 27),  -- INF206
+-- Choix 2 parmi (MTH202, MTH204, MTH206)
+(4, 33),  -- MTH202
+(4, 34),  -- MTH204
+(4, 36);  -- MTH206
 
 
 -- Statut_Note
@@ -76,6 +127,23 @@ INSERT INTO Notes(id_semestre, id_ue, id_statut_note, valeur) VALUES
 (3, 17, 3, 12.0),
 (3, 18, 2, 14.5);
 
+-- semestre 4
+INSERT INTO Notes (id_semestre, id_ue, id_statut_note, valeur) VALUES
+(4, 25, 1, 12.50),  -- INF204
+(4, 26, 1, 14.00),  -- INF205
+(4, 27, 1, 13.75),  -- INF206
+(4, 28, 1, 11.00),  -- INF207
+(4, 29, 1, 15.25),  -- INF209
+(4, 30, 1, 16.00),  -- INF210
+(4, 31, 1, 14.50),  -- INF211
+(4, 32, 1, 17.00),  -- INF212
+(4, 33, 1, 13.00),  -- MTH202
+(4, 34, 1, 12.00),  -- MTH204
+(4, 35, 1, 10.25),  -- MTH205
+(4, 36, 1, 11.75),  -- MTH206
+(4, 37, 1, 15.00);  -- MTH203
+
+
 
 -- Inscriptions
 -- etudiant 1 (Jean) sur Semestres 1 à 3
@@ -100,6 +168,20 @@ INSERT INTO Inscription(date_inscription, date_debut, date_fin, id_semestre, id_
 ('2026-01-10','2026-01-15','2026-06-10',3,16,16,1,1),
 ('2026-01-10','2026-01-15','2026-06-10',3,17,17,1,1),
 ('2026-01-10','2026-01-15','2026-06-10',3,18,18,1,1);
+INSERT INTO Inscription (date_inscription, date_debut, date_fin, id_semestre, id_ue, id_note, id_session, id_etudiant) VALUES
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 25, 19, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 26, 20, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 27, 21, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 28, 22, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 29, 23, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 30, 24, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 31, 25, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 32, 26, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 33, 27, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 34, 28, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 35, 29, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 36, 30, 1, 1),
+('2025-01-10', '2025-01-10', '2025-06-30', 4, 37, 31, 1, 1);
 
 
 -- Options
@@ -113,3 +195,30 @@ INSERT INTO Option(label) VALUES
 INSERT INTO Matiere_Optionnel(id_semestre, id_ue) VALUES
 (1, 2), 
 (2, 4);
+
+-- Option 1 : Développement
+UPDATE Matiere_Optionnel SET id_option = 1
+WHERE id_semestre = 4 AND id_ue IN (26,27,33,34,35);
+
+-- Option 2 : Bases de Données et Réseaux
+UPDATE Matiere_Optionnel SET id_option = 2
+WHERE id_semestre = 4 AND id_ue IN (27,28,33,35,36);
+
+-- Option 3 : Web et Design
+UPDATE Matiere_Optionnel SET id_option = 3
+WHERE id_semestre = 4 AND id_ue IN (26,27,33,34,36);
+
+
+-- Développement (id_option = 1)
+UPDATE Matiere_Optionnel SET id_option = 1 
+WHERE id IN (1,3,4,11,6,18);
+
+-- Bases de Données et Réseaux (id_option = 2)
+UPDATE Matiere_Optionnel SET id_option = 2
+WHERE id IN (5,8,10,12,14,17);
+
+-- Web et Design (id_option = 3)
+UPDATE Matiere_Optionnel SET id_option = 3
+WHERE id IN (2,7,9,13,15,16);
+
+
