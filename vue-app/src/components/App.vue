@@ -1,18 +1,3 @@
-<!-- <template>
-  <div id="app">
-    <h1>Gestion des Semestres</h1>
-
-    <component
-      :is="currentView"
-      :semestreSelectionne="semestreSelectionne"
-      :etudiantSelectionne="etudiantSelectionne"
-      @voir-etudiants="ouvrirEtudiants"
-      @voir-details="ouvrirDetailsEtudiant"
-      @retour="retour"
-    />
-  </div>
-</template> -->
-
 <script>
 import SemestreList from './SemestreList.vue'
 import EtudiantList from './EtudiantList.vue'
@@ -21,10 +6,7 @@ import Releve from './Releve.vue'
 import InfosEtu from './InfosEtu.vue'
 
 export default {
-  // name: 'App',
-  // components: { SemestreList, EtudiantList, DetailsEtudiant },
-
-
+  
   name: 'App',
   components: { SemestreList, EtudiantList, Releve, InfosEtu, DetailsEtudiant },
   data() {
@@ -77,12 +59,13 @@ export default {
   <div id="app">
     <h1>Gestion des Semestres</h1>
 
-    <!-- Vue dynamique -->
     <component 
       :is="currentView" 
       :semestreSelectionne="semestreSelectionne"
       :etudiant="etudiant"
+      :etudiantSelectionne="etudiantSelectionne"
       @voir-etudiants="ouvrirEtudiants"
+      @voir-details="ouvrirDetailsEtudiant"
       @retour="retourAccueil"
       @releve="releve"
       @infosEtu="infosEtu"
